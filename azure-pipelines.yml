@@ -16,3 +16,4 @@ steps:
   inputs:
     PathtoPublish: 'target'
     ArtifactName: 'drop'
+    publishLocation: 'Container'
