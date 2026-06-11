@@ -6,10 +6,12 @@ pool:
 
 stages:
 - stage: Build
+  displayName: Build Stage
   jobs:
-  - job: BuildJob
+  - job: MavenJob
     steps:
     - task: Maven@4
+      displayName: Build Maven Project
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean package'
@@ -17,12 +19,14 @@ stages:
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
 
     - task: PublishBuildArtifacts@1
+      displayName: Publish WAR Artifact
       inputs:
         PathtoPublish: 'target'
         ArtifactName: 'drop'
         publishLocation: 'Container'
 
 - stage: Deploy
+  displayName: Deploy Stage
   dependsOn: Build
   jobs:
   - job: DeployJob
@@ -31,4 +35,4 @@ stages:
         echo "Starting Deployment"
         echo "Deploying TomcatMavenApp"
         echo "Deployment Successful"
-      displayName: 'Deploy Application'
+      displayName: 'Deploy WAR Application'
